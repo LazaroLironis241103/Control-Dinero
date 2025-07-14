@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "system",
+    "outFile": "app.js",
+    "strict": true
+  },
+  "include": ["src"]
+}
