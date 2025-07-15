@@ -1,0 +1,204 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Fondo general */
+body {
+  background: #f0f3f7;
+  color: #333;
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Contenedor principal para separar contenido del borde */
+.container {
+  max-width: 480px;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  padding: 30px 35px;
+}
+
+/* Título centrado */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #222;
+}
+
+/* Formulario */
+form#controlMensual {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+/* Agrupador label + input */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"] {
+  padding: 10px 14px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  transition: border-color 0.25s ease;
+}
+
+.form-group input[type="number"]:focus,
+.form-group input[type="text"]:focus {
+  border-color: #0077cc;
+  outline: none;
+}
+
+/* Botones juntos, con espacio entre ellos */
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+button {
+  flex: 1;
+  padding: 14px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+#calcular {
+  background-color: #0077cc;
+}
+
+#calcular:hover {
+  background-color: #005fa3;
+}
+
+#reiniciar {
+  background-color: #cc0000;
+}
+
+#reiniciar:hover {
+  background-color: #990000;
+}
+
+/* Resultado y ahorros */
+.resumen {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+#total {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+#ahorrosInfo {
+  font-size: 1.2rem;
+  color: #777;
+  font-weight: 500;
+}
+
+/* Historial */
+#historial {
+  max-height: 280px;
+  overflow-y: auto;
+  border-top: 2px solid #eee;
+  padding-top: 20px;
+}
+
+#historial h2 {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  color: #222;
+  text-align: center;
+}
+
+#listaHistorial {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#listaHistorial li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eaeaea;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+#listaHistorial li:last-child {
+  border-bottom: none;
+}
+
+#listaHistorial button {
+  background-color: #cc0000;
+  border: none;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+#listaHistorial button:hover {
+  background-color: #990000;
+}
+
+/* Scrollbar más estilizada (opcional) */
+#listaHistorial::-webkit-scrollbar {
+  width: 8px;
+}
+
+#listaHistorial::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 520px) {
+  .container {
+    padding: 25px 20px;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+
+  #listaHistorial li {
+    font-size: 1rem;
+  }
+}

@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Control de Dinero</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Control de Dinero</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<h1>Mi App de Control de Dinero</h1>
-<script src="app.js"></script>
+<div class="container">
+    <h1>Control de Dinero Mensual</h1>
+
+  <form id="controlMensual">
+    <div class="form-group">
+      <label for="ingresos">Ingresos</label>
+      <input type="number" id="ingresos" name="ingresos" placeholder="Ej: 50000" />
+    </div>
+
+    <div class="form-group">
+      <label for="gastos">Gastos</label>
+      <input type="number" id="gastos" name="gastos" placeholder="Ej: 2000" />
+    </div>
+
+    <div class="form-group">
+      <label for="ahorros">Ahorros</label>
+      <input type="number" id="ahorros" name="ahorros" placeholder="Ej: 10000" />
+    </div>
+
+    <div class="form-group">
+      <label for="descripcion">Descripción</label>
+      <input type="text" id="descripcion" name="descripcion" placeholder="Ej: sueldo, comida..." />
+    </div>
+
+    <button type="button" id="calcular">Calcular</button>
+    <button type="button" id="reiniciar">Reiniciar</button>
+  </form>
+
+  <div id="resultado" class="resumen">
+    <p id="total">Total disponible: $0</p>
+    <p id="ahorrosInfo">Ahorros del mes: $0</p>
+  </div>
+
+  <div id="historial">
+    <h2>Historial de movimientos</h2>
+    <ul id="listaHistorial"></ul>
+  </div>
+</div>
+  <script src="src/app.js"></script>
 </body>
 </html>

@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "system",
-    "outFile": "app.js",
-    "strict": true
+    "target": "es6",
+    "module": "commonjs",
+    "rootDir": "src",
+    "outDir": "src",
+    "strict": true,
+    "esModuleInterop": true
   },
-  "include": ["src"]
+  "include": ["src/**/*"],
+  "exclude": []
 }
