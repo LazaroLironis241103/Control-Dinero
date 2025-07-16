@@ -1,4 +1,8 @@
 "use strict";
+let grafico = null; // ✅ Declarado antes de llamar a renderizarGraficoMensual
+function generarID() {
+    return Date.now() + Math.floor(Math.random() * 1000);
+}
 // Elementos del DOM
 const ingresosInput = document.getElementById("ingresos");
 const gastosInput = document.getElementById("gastos");
@@ -16,11 +20,13 @@ let ahorros = parseFloat(localStorage.getItem("ahorros") || "0");
 // Mostrar valores al cargar
 actualizarVista();
 renderizarHistorial();
+renderizarGraficoMensual();
 btnCalcular.addEventListener("click", () => {
     const ingresos = parseFloat(ingresosInput.value) || 0;
     const gastos = parseFloat(gastosInput.value) || 0;
     const nuevosAhorros = parseFloat(ahorrosInput.value) || 0;
     const descripcion = descripcionInput.value.trim();
+    const fecha = new Date().toLocaleDateString("es-AR");
     if (ingresos < 0 || gastos < 0 || nuevosAhorros < 0) {
         alert("No se permiten valores negativos.");
         return;
@@ -36,19 +42,21 @@ btnCalcular.addEventListener("click", () => {
     if (ingresos > 0) {
         total += ingresos;
         historial.push({
-            id: Date.now(),
+            id: generarID(),
             tipo: "ingreso",
             monto: ingresos,
-            descripcion
+            descripcion,
+            fecha
         });
     }
     if (gastos > 0) {
         total -= gastos;
         historial.push({
-            id: Date.now() + 1, // para evitar IDs repetidos en ingreso y gasto simultáneo
+            id: generarID(),
             tipo: "gasto",
             monto: gastos,
-            descripcion
+            descripcion,
+            fecha
         });
     }
     ahorros = nuevosAhorros;
@@ -63,6 +71,8 @@ btnCalcular.addEventListener("click", () => {
     descripcionInput.value = "";
     actualizarVista();
     renderizarHistorial();
+    renderizarGraficoMensual();
+    mostrarToast("Movimiento agregado");
 });
 btnReiniciar.addEventListener("click", () => {
     total = 0;
@@ -75,6 +85,8 @@ btnReiniciar.addEventListener("click", () => {
     descripcionInput.value = "";
     actualizarVista();
     renderizarHistorial();
+    renderizarGraficoMensual();
+    mostrarToast("Datos reiniciados");
 });
 function actualizarVista() {
     totalTexto.textContent = `Total disponible: $${total.toFixed(2)}`;
@@ -83,10 +95,9 @@ function actualizarVista() {
 function renderizarHistorial() {
     listaHistorial.innerHTML = "";
     historial.forEach((mov) => {
-        // Validar monto antes de usar toFixed
         const monto = typeof mov.monto === "number" ? mov.monto : 0;
         const li = document.createElement("li");
-        li.textContent = `${mov.tipo === "ingreso" ? "+ Ingreso" : "- Gasto"}: $${monto.toFixed(2)} - ${mov.descripcion}`;
+        li.textContent = `${mov.tipo === "ingreso" ? "+ Ingreso" : "- Gasto"}: $${monto.toFixed(2)} - ${mov.descripcion} (${mov.fecha})`;
         const btnEliminar = document.createElement("button");
         btnEliminar.textContent = "Eliminar";
         btnEliminar.style.marginLeft = "10px";
@@ -112,5 +123,57 @@ function eliminarMovimiento(id) {
         localStorage.setItem("total", total.toString());
         renderizarHistorial();
         actualizarVista();
+        renderizarGraficoMensual();
+        mostrarToast("Movimiento eliminado");
     }
+}
+function obtenerTotalPorMes() {
+    const totales = {};
+    historial.forEach((mov) => {
+        const fecha = new Date(mov.fecha);
+        if (isNaN(fecha.getTime()))
+            return;
+        const claveMes = `${fecha.getFullYear()}-${fecha.getMonth() + 1}`;
+        if (!totales[claveMes])
+            totales[claveMes] = 0;
+        totales[claveMes] += mov.tipo === "ingreso" ? mov.monto : -mov.monto;
+    });
+    return totales;
+}
+function renderizarGraficoMensual() {
+    const datosPorMes = obtenerTotalPorMes();
+    const labels = Object.keys(datosPorMes).sort();
+    const datos = labels.map(mes => datosPorMes[mes]);
+    const ctx = document.getElementById("graficoMensual");
+    if (grafico) {
+        grafico.destroy();
+    }
+    grafico = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels,
+            datasets: [{
+                    label: "Total mensual",
+                    data: datos,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)"
+                }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+function mostrarToast(mensaje) {
+    const toast = document.getElementById("toast");
+    if (!toast)
+        return;
+    toast.textContent = mensaje;
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
 }
