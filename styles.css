@@ -63,6 +63,8 @@ form#controlMensual {
   border-radius: 8px;
   border: 2px solid #ccc;
   transition: border-color 0.25s ease;
+   width: 100%;          
+  box-sizing: border-box; 
 }
 
 .form-group input[type="number"]:focus,
@@ -191,7 +193,11 @@ button {
 /* Responsive para móviles */
 @media (max-width: 520px) {
   .container {
-    padding: 25px 20px;
+    padding: 20px 15px;
+  }
+
+  form#controlMensual {
+    gap: 12px;
   }
 
   button {
@@ -199,7 +205,8 @@ button {
   }
 
   #listaHistorial li {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    padding: 10px 12px;
   }
 }
 
@@ -226,17 +233,150 @@ button {
   opacity: 1;
 }
 
-/* ... tu CSS existente ... */
-
 .grafico-container {
   margin-top: 40px;
   text-align: center;
 }
 
 .grafico-container canvas {
-  max-width: 100%;
-  height: auto;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 250px;
   display: block;
   margin: 0 auto;
 }
 
+
+.monto.positivo {
+  color: green;
+  font-weight: bold;
+}
+
+.monto.negativo {
+  color: red;
+  font-weight: bold;
+}
+
+.texto-movimiento {
+  display: inline;
+  font-size: inherit;
+  line-height: 1.5;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Contenedor principal */
+body.dark-mode .container {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Inputs y formularios */
+body.dark-mode input,
+body.dark-mode button,
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+  border: 1px solid #555;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #aaa;
+}
+
+/* Botones */
+body.dark-mode button {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #666;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode button:hover {
+  background-color: #444;
+}
+
+/* Resumen y resultados */
+body.dark-mode .resumen,
+body.dark-mode .toast {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+/* Títulos */
+body.dark-mode h1,
+body.dark-mode h2 {
+  color: #ffffff;
+}
+
+/* Historial */
+body.dark-mode #historial {
+  background-color: #1a1a1a;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+body.dark-mode #listaHistorial li {
+  border-bottom: 1px solid #444;
+}
+
+/* Gráfico */
+body.dark-mode .grafico-container {
+  background-color: #1e1e1e;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.modo-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modo-btn:hover {
+  background-color: #005fa3;
+}
+
+body.dark-mode .modo-btn {
+  background-color: #444;
+  color: #eee;
+}
+
+body.dark-mode .modo-btn:hover {
+  background-color: #666;
+}
+
+/* Total disponible y ahorros */
+body.dark-mode .resumen p {
+  color: #ffffff;
+}
+
+/* Títulos */
+body.dark-mode h1,
+body.dark-mode h2 {
+  color: #ffffff;
+}
+
+/* Historial */
+body.dark-mode #historial,
+body.dark-mode #total,
+body.dark-mode #historial h2,
+body.dark-mode #listaHistorial,
+body.dark-mode #listaHistorial li {
+  color: #ffffff;
+}

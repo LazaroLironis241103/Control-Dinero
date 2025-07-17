@@ -1,5 +1,14 @@
 "use strict";
 let grafico = null; // ✅ Declarado antes de llamar a renderizarGraficoMensual
+const toggleButton = document.getElementById("toggleDarkMode");
+const body = document.body;
+if (localStorage.getItem("modoOscuro") === "true") {
+    body.classList.add("dark-mode");
+}
+toggleButton === null || toggleButton === void 0 ? void 0 : toggleButton.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    localStorage.setItem("modoOscuro", body.classList.contains("dark-mode").toString());
+});
 function generarID() {
     return Date.now() + Math.floor(Math.random() * 1000);
 }
@@ -95,15 +104,23 @@ function actualizarVista() {
 function renderizarHistorial() {
     listaHistorial.innerHTML = "";
     historial.forEach((mov) => {
-        const monto = typeof mov.monto === "number" ? mov.monto : 0;
         const li = document.createElement("li");
-        li.textContent = `${mov.tipo === "ingreso" ? "+ Ingreso" : "- Gasto"}: $${monto.toFixed(2)} - ${mov.descripcion} (${mov.fecha})`;
+        const contenedorTexto = document.createElement("div");
+        contenedorTexto.classList.add("texto-movimiento");
+        const montoSpan = document.createElement("span");
+        montoSpan.textContent = `$${mov.monto.toFixed(2)}`;
+        montoSpan.classList.add("monto", mov.tipo === "ingreso" ? "positivo" : "negativo");
+        const signo = mov.tipo === "ingreso" ? "+" : "-";
+        const tipoCapitalizado = mov.tipo === "ingreso" ? "Ingreso" : "Gasto";
+        contenedorTexto.append(`${signo} ${tipoCapitalizado}: `);
+        contenedorTexto.appendChild(montoSpan);
+        contenedorTexto.append(` - ${mov.descripcion} (${mov.fecha})`);
         const btnEliminar = document.createElement("button");
         btnEliminar.textContent = "Eliminar";
-        btnEliminar.style.marginLeft = "10px";
         btnEliminar.addEventListener("click", () => {
             eliminarMovimiento(mov.id);
         });
+        li.appendChild(contenedorTexto);
         li.appendChild(btnEliminar);
         listaHistorial.appendChild(li);
     });

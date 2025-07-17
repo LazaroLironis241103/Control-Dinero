@@ -6,9 +6,11 @@
   <title>Control de Dinero</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="dark-mode">
 <div class="container">
     <h1>Control de Dinero Mensual</h1>
+    <button id="toggleDarkMode" class="modo-btn">Modo oscuro</button>
+
 
   <form id="controlMensual">
     <div class="form-group">
@@ -30,9 +32,11 @@
       <label for="descripcion">Descripción</label>
       <input type="text" id="descripcion" name="descripcion" placeholder="Ej: sueldo, comida..." />
     </div>
-
-    <button type="button" id="calcular">Calcular</button>
-    <button type="button" id="reiniciar">Reiniciar</button>
+    
+    <div class="buttons">
+      <button type="button" id="calcular">Calcular</button>
+      <button type="button" id="reiniciar">Reiniciar</button>
+    </div>
   </form>
 
   <div id="resultado" class="resumen">
